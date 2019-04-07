@@ -33,11 +33,14 @@ constructor(props) {
   }
 
   deleteItem(studentId) {
+   const { students } = this.state;
       fetch('http://localhost:8080/'+studentId, {
 			method: 'DELETE'
 		})
-		.then(this.componentDidMount());
-		this.forceUpdate();
+	  .then((result) => {
+	       this.setState({
+	       students: students.filter(student => student.id !== studentId)})
+	  });
   }
 
   render() {
