@@ -12,6 +12,7 @@ class TableRow extends Component {
         axios.delete('http://localhost:8080/'+this.props.obj.id)
             .then(console.log('Deleted'))
             .catch(err => console.log(err));
+			window.alert("Student deleted") ;
     }
   render() {
     return (

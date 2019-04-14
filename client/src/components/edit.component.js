@@ -47,7 +47,7 @@ export default class Edit extends Component {
     };
     axios.put('http://localhost:8080/'+this.props.match.params.id, obj)
         .then(res => console.log(res.data));
-    
+    window.alert("Student record edited") ;
     this.props.history.push('/index');
   }
  
