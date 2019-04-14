@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TestController {
 
     @Autowired
@@ -19,16 +19,12 @@ public class TestController {
     @PostConstruct
     public void addSampleData(){
         final List list = Arrays.asList(
-                new Student(1,"AA",10),
-                new Student(2,"AB",11),
-                new Student(3,"AC",12),
-                new Student(4,"AD",10),
-                new Student(5,"AE",11),
-                new Student(6,"AF",12),
-                new Student(7,"AG",10),
-                new Student(8,"AH",11),
-                new Student(9,"AI",12),
-                new Student(10,"AJ",13));
+                new Student(1,"Aakash",10),
+                new Student(2,"Arnab",11),
+                new Student(3,"Alka",12),
+                new Student(4,"Anshul",10),
+                new Student(5,"Rajul",11),
+                new Student(6,"Abhay",12));
         studentRepository.saveAll(list);
     }
 
@@ -37,9 +33,22 @@ public class TestController {
         return studentRepository.findAll();
     }
 
-    @PutMapping(value = "/{studentId}")
-    public void updateStudentDetail(@PathVariable("studentId") final Long studentId, @RequestBody final Student student){
+    @GetMapping(value = "/{studentId}")
+    public Student getStudentById(@PathVariable("studentId") final Integer studentId){
+        return studentRepository.findById(studentId).get();
+    }
+
+    @PostMapping(value = "/")
+    public void addStudent(@RequestBody final Student student){
         studentRepository.save(student);
+    }
+
+    @PutMapping(value = "/{studentId}")
+    public void updateStudentDetail(@PathVariable("studentId") final Integer studentId, @RequestBody final Student student){
+        Student oldStudent = studentRepository.findById(studentId).get();
+        oldStudent.setName(student.getName());
+        oldStudent.setAge(student.getAge());
+        studentRepository.save(oldStudent);
     }
 
     @DeleteMapping(value = "/{studentId}")
